@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Сломанная консоль старого сервера</title>
+  <style>
+    /* Общие стили 2012 года */
+    body {
+      background-color: #000;
+      color: #0f0;
+      font-family: "Courier New", Courier, monospace;
+      margin: 0;
+      padding: 0;
+    }
+    a { color: #0f0; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { width: 800px; margin: 0 auto; padding: 20px; }
+    h1, h2, h3 { margin: 10px 0; }
+    
+    /* Консоль */
+    #consoleSection {
+      background: #111;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #0f0;
+    }
+    pre { white-space: pre-wrap; }
+    
+    /* Глючащий эффект для первой буквы */
+    .glitch {
+      display: inline-block;
+      position: relative;
+      color: #0f0;
+      animation: glitch 1s infinite;
+    }
+    @keyframes glitch {
+      0% { text-shadow: 2px 2px red; }
+      20% { text-shadow: -2px -2px blue; }
+      40% { text-shadow: 2px -2px green; }
+      60% { text-shadow: -2px 2px purple; }
+      80% { text-shadow: 2px 2px orange; }
+      100% { text-shadow: -2px -2px yellow; }
+    }
+    
+    /* Поля ввода в "поломанном" стиле */
+    input {
+      border: 1px solid #0f0;
+      background: #000;
+      color: #0f0;
+      font-family: "Courier New", Courier, monospace;
+      padding: 5px;
+      margin: 5px;
+    }
+    button {
+      background: #111;
+      color: #0f0;
+      border: 1px solid #0f0;
+      padding: 5px 10px;
+      margin: 5px;
+      cursor: pointer;
+    }
+    
+    /* Скрытые блоки */
+    .hidden { display: none; }
+    
+    /* Фейковые рекламные блоки */
+    .ad {
+      border: 1px dashed #0f0;
+      padding: 5px;
+      margin: 5px 0;
+      font-size: 0.9em;
+    }
+    
+    /* Анимация конфетти (старая анимация выдачи достижений) */
+    @keyframes confetti {
+      0% { opacity: 0; transform: translateY(-20px); }
+      50% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(20px); }
+    }
+    
+    /* Анимация падения кнопки (математика) */
+    @keyframes fall {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(300px) rotate(15deg); opacity: 0; }
+    }
+    .fall {
+      animation: fall 2s forwards;
+    }
+    
+    /* Улучшенная анимация падения для битого пикселя */
+    @keyframes pixelFall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      50% { transform: translateY(150px) rotate(10deg); opacity: 0.7; }
+      100% { transform: translateY(300px) rotate(20deg); opacity: 0; }
+    }
+    
+    /* Стиль для "битого пикселя" */
+    #brokenPixel {
+      width: 50px;
+      height: 50px;
+      background-color: #0f0;
+      margin: 20px 0;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    #brokenPixel:hover {
+      background-color: #080;
+    }
+    
+    /* Элемент для показа 4-й буквы */
+    #fourthLetter {
+      display: none;
+      margin-top: 20px;
+      font-size: 1.5em;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="mainPage">
+    <!-- Консоль старого сервера -->
+    <div id="consoleSection">
+      <h1>Console</h1>
+      <pre>
+[12:00] BlockBusterHero: Hey, are you still on the server?
+[12:01] CreeperCrafter: Yeah, been here since the old days. Remember Mirai, the creator?
+[12:02] BlockBusterHero: Of course. Mirai built this server from scratch.
+[12:03] CreeperCrafter: Those were the times... now everything is falling apart.
+[12:04] BlockBusterHero: It feels like the console itself is haunted.
+[12:05] CreeperCrafter: Maybe the console holds the secrets?
+      </pre>
+      <p>[12:10] Console: <span class="glitch">l</span></p>
+    </div>
+
+    <!-- Блок входа (логин/пароль) -->
+    <div id="loginSection">
+      <h2>Вход в консоль</h2>
+      <input type="text" id="loginInput" placeholder="Логин">
+      <input type="password" id="passwordInput" placeholder="Пароль">
+      <button onclick="handleLogin()">Войти</button>
+    </div>
+
+    <!-- Фейковые рекламные блоки -->
+    <div id="adsSection">
+      <div class="ad">
+        <strong>Помогите пингвинам!</strong><br>
+        Мир теряет своих пингвинов. Примите участие в спасении этих удивительных существ!
+      </div>
+      <div class="ad">
+        <strong>Магазин "чифир"</strong><br>
+        Лучший чай в сети. Настоящий вкус старых времён — попробуй сейчас!
+      </div>
+      <div class="ad">
+        <strong>Skateboards <a href="https://surf.li" target="_blank">surf.li</a></strong><br>
+        Катайся стильно — узнай больше о скейтбордах на surf.li.
+      </div>
+    </div>
+
+    <!-- Битый пиксель -->
+    <div id="brokenPixel" onclick="handlePixelClick()"></div>
+    <div id="fourthLetter"><strong>o(4)</strong></div>
+
+    <!-- Кнопка для просмотра достижений (становится доступной после получения хотя бы одного достижения) -->
+    <button id="achievementsBtn" onclick="showAchievements()" disabled>Достижения</button>
+    <!-- Кнопка для перехода на страницу с математическими заданиями -->
+    <button onclick="showMathPage()">Помощь развитию Рите</button>
+  </div>
+
+  <!-- Страница для логина Mirai -->
+  <div class="container hidden" id="miraiPage">
+    <p style="font-size: 2em; text-align: center; margin-top: 40vh;">
+      он лучше меня. мне его не превзойти.
+    </p>
+    <input type="text" id="miraiLetterInput" placeholder="j (2)">
+    <button onclick="backToMain()">Назад</button>
+  </div>
+
+  <!-- Страница с математическими заданиями -->
+  <div class="container hidden" id="mathPage">
+    <h2>Помощь развитию Рите</h2>
+    <form id="mathForm">
+      <div>1. 2 + 2 = <input type="text" name="q1"></div>
+      <div>2. 5 - 3 = <input type="text" name="q2"></div>
+      <div>3. 3 * 3 = <input type="text" name="q3"></div>
+      <div>4. 10 / 2 = <input type="text" name="q4"></div>
+      <div>5. 7 + 1 = <input type="text" name="q5"></div>
+      <div>6. 9 - 4 = <input type="text" name="q6"></div>
+      <div>7. 4 * 2 = <input type="text" name="q7"></div>
+      <div>8. 16 / 4 = <input type="text" name="q8"></div>
+      <div>9. 6 + 3 = <input type="text" name="q9"></div>
+      <div>10. 8 - 2 = <input type="text" name="q10"></div>
+      <button type="button" id="mathSubmitBtn" onclick="submitMath()">Отправить</button>
+    </form>
+    <div id="mathResult"></div>
+    <button onclick="backToMain()">Назад</button>
+  </div>
+
+  <!-- Страница достижений -->
+  <div class="container hidden" id="achievementsPage">
+    <h2>Достижения</h2>
+    <div id="achievementList"></div>
+    <button onclick="backToMain()">Назад</button>
+  </div>
+
+  <script>
+    var achievementsUnlocked = false;
+    var achievementList = [];
+    var pixelClickCount = 0;
+
+    function handleLogin() {
+      var loginVal = document.getElementById('loginInput').value.trim();
+      // Поле для пароля служит лишь для красоты
+      if(loginVal === "Mirai") {
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('mainPage').style.display = 'none';
+        document.getElementById('miraiPage').style.display = 'block';
+      } else if(loginVal === "chifir4ik") {
+        triggerAchievement("бро думает он главный герой", "https://img.freepik.com/premium-vector/pixel-art-coffee-cup-icon-set-bit_360488-81.jpg");
+        document.getElementById('loginInput').value = "";
+        document.getElementById('passwordInput').value = "";
+      } else if(loginVal === "nekovalski") {
+        window.location.href = "https://upsihologa.com.ua/ru/ask/ask.php?id=4137";
+      } else if(loginVal === "Fonax") {
+        triggerAchievement("в этой истории свои герои", "https://img.freepik.com/premium-vector/pixel-art-pawn-chess-piece-item-8bit-game-white-background_360488-245.jpg");
+        document.getElementById('loginInput').value = "";
+        document.getElementById('passwordInput').value = "";
+      } else {
+        alert("Неверный логин.");
+      }
+    }
+
+    function triggerAchievement(name, icon) {
+      achievementsUnlocked = true;
+      document.getElementById('achievementsBtn').disabled = false;
+      achievementList.push(name);
+      var confetti = document.createElement("div");
+      confetti.innerHTML = name + (icon ? ' <img src="' + icon + '" style="width:20px; vertical-align:middle;">' : '');
+      confetti.style.background = "#333";
+      confetti.style.color = "#0f0";
+      confetti.style.padding = "10px";
+      confetti.style.marginTop = "10px";
+      confetti.style.animation = "confetti 2s ease-out";
+      document.getElementById('loginSection').appendChild(confetti);
+      // Удаляем блок достижения после окончания анимации (2 секунды)
+      confetti.addEventListener('animationend', function() {
+        confetti.remove();
+      });
+      document.getElementById('loginInput').value = "";
+      document.getElementById('passwordInput').value = "";
+    }
+
+    function showAchievements() {
+      document.getElementById('mainPage').style.display = 'none';
+      document.getElementById('achievementsPage').style.display = 'block';
+      var listDiv = document.getElementById('achievementList');
+      listDiv.innerHTML = "";
+      achievementList.forEach(function(item) {
+        var div = document.createElement("div");
+        div.innerHTML = item;
+        listDiv.appendChild(div);
+      });
+    }
+
+    function showMathPage() {
+      document.getElementById('mainPage').style.display = 'none';
+      document.getElementById('mathPage').style.display = 'block';
+    }
+
+    function backToMain() {
+      document.getElementById('miraiPage').style.display = 'none';
+      document.getElementById('mathPage').style.display = 'none';
+      document.getElementById('achievementsPage').style.display = 'none';
+      document.getElementById('mainPage').style.display = 'block';
+    }
+
+    function submitMath() {
+      // Правильные ответы
+      var answers = {
+        q1: "4", q2: "2", q3: "9", q4: "5", q5: "8",
+        q6: "5", q7: "8", q8: "4", q9: "9", q10: "6"
+      };
+      var form = document.getElementById('mathForm');
+      var allCorrect = true;
+      for (var key in answers) {
+        if(form.elements[key].value.trim() !== answers[key]) {
+          allCorrect = false;
+          break;
+        }
+      }
+      // Выводим новый код (третья буква)
+      document.getElementById('mathResult').innerHTML = '<h3>0YLRg9GCINCx0YvQuyDRhNC+0L3QsNC60YEuINC60L7RgNGH0LUg0YLRgNC10YLRjNGPINCx0YPQutCy0LAg0Y3RgtC+IGcsINC/0Y/RgtCw0Y8g0Y3RgtC+INCw0L3Qs9C70LjQudGB0LrQsNGPIGEsINCwINGI0LXRgdGC0LDRjyDRjdGC0L4gZyDQvtC/0Y/RgtGMLiDRgdC+0YHQuA==</h3>';
+      // Анимация падения кнопки
+      var submitBtn = document.getElementById('mathSubmitBtn');
+      submitBtn.classList.add("fall");
+      // Если всё верно, выдаём достижение
+      if(allCorrect) {
+        triggerAchievement("самый умный что-ли?", "https://img.freepik.com/premium-vector/pixel-art-illustration-brain-pixelated-brain-brain-icon-pixelated-pixel-art_1038602-277.jpg");
+      }
+    }
+
+    function handlePixelClick() {
+      pixelClickCount++;
+      // После 5 кликов "битый пиксель" падает с улучшенной анимацией и открывает 4-ю букву
+      if(pixelClickCount >= 5) {
+        var pixel = document.getElementById('brokenPixel');
+        pixel.style.animation = "pixelFall 1.5s ease-out forwards";
+        setTimeout(function() {
+          document.getElementById('fourthLetter').style.display = "block";
+        }, 1500);
+      }
+    }
+  </script>
+</body>
+</html>
